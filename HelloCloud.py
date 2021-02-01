@@ -1,3 +1,14 @@
+'''
+from flask import Flask
+server = Flask(__name__)
+
+@server.route("/")
+def hello():
+    return "Hello Website on Ruk-Com AdvancedWeb-21"
+
+if __name__ == "__main__":
+    server.run( host= '0.0.0.0' , port=80 )
+'''
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
@@ -6,9 +17,9 @@ from flask_marshmallow import Marshmallow
 app = Flask(__name__)
 
 #Database
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://webadmin:FFGqce84823@node8579-advweb-12.app.ruk-com.cloud:11102/CloudDB'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://webadmin:TGPboi81761@node8607-advweb-21.app.ruk-com.cloud:11091/CloudDB'
+#10.100.2.203:5432
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://webadmin:TGPboi81761@10.100.2.203:5432/CloudDB'
-
 app.config['SQLALCHEMY_TRACK_MODIFICATION'] = False
 #Init db
 db = SQLAlchemy(app)
@@ -32,13 +43,13 @@ class Staffs(db.Model):
 class StaffSchema(ma.Schema):
     class Meta:
         fields =('id', 'name', 'email', 'phone')
-
+        
 # Init Schema 
 staff_schema = StaffSchema()
 staffs_schema = StaffSchema(many=True)
 
 # Get All Staffs
-@app.route('/staff', methods=['GET'])
+@app.route('/staffs', methods=['GET'])
 def get_staffs():
     all_staffs = Staffs.query.all()
     result = staffs_schema.dump(all_staffs)
@@ -99,3 +110,4 @@ def get():
 # Run Server
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=80)
+

@@ -43,7 +43,7 @@ class Staffs(db.Model):
 class StaffSchema(ma.Schema):
     class Meta:
         fields =('id', 'name', 'email', 'phone')
-
+        
 # Init Schema 
 staff_schema = StaffSchema()
 staffs_schema = StaffSchema(many=True)
@@ -54,6 +54,12 @@ def get_staffs():
     all_staffs = Staffs.query.all()
     result = staffs_schema.dump(all_staffs)
     return jsonify(result)
+
+# Get Single Staff
+@app.route('/staff/<id>', methods=['GET'])
+def get_staff(id):
+    staff = Staffs.query.get(id)
+    return staff_schema.jsonify(staff)
 
 # Create a Staff
 @app.route('/staff', methods=['POST'])

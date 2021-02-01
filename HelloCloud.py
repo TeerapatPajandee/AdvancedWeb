@@ -49,7 +49,7 @@ staff_schema = StaffSchema()
 staffs_schema = StaffSchema(many=True)
 
 # Get All Staffs
-@app.route('/staffs', methods=['GET'])
+@app.route('/staff', methods=['GET'])
 def get_staffs():
     all_staffs = Staffs.query.all()
     result = staffs_schema.dump(all_staffs)
